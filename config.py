@@ -16,7 +16,7 @@ STEAM_PARTNER = os.getenv("STEAM_PARTNER")
 STEAM_TOKEN = os.getenv("STEAM_TOKEN")
 
 rateRUB = 79
-rateCNY = 0.14
+rateCNY = 7.20
 
 # Фильтры поиска
 FLOAT_RANGES = [
