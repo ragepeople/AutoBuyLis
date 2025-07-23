@@ -1,13 +1,18 @@
 """Конфигурация приложения"""
+from dotenv import load_dotenv
+import os
+
+load_dotenv() 
+
 
 # API настройки
-API_KEY = "4e4c7b8029f3cb97f"
-TELEGRAM_TOKEN = "77267275eZdH-t1Qlk5KOrOYc_c"
-TELEGRAM_CHAT_ID = "7581"
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+API_KEY = os.getenv("API_KEY")
 
 # Steam настройки
-STEAM_PARTNER = "1057"
-STEAM_TOKEN = "0Kqy"
+STEAM_PARTNER = os.getenv("STEAM_PARTNER")
+STEAM_TOKEN = os.getenv("STEAM_TOKEN")
 
 # Фильтры поиска
 FLOAT_RANGES = [
@@ -71,7 +76,7 @@ API_BUY_URL = f"{API_BASE_URL}/market/buy"
 MAX_RECONNECT_ATTEMPTS = 10
 RECONNECT_DELAY = 5
 HEARTBEAT_INTERVAL = 60
-NO_EVENTS_TIMEOUT = 300  # 5 минут
+NO_EVENTS_TIMEOUT = 150  # 3 минут
 
 # Кеш
 CACHE_CLEANUP_INTERVAL = 3600  # 1 час
