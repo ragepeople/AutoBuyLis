@@ -277,8 +277,8 @@ class CSGOEventHandler(SubscriptionEventHandler):
             f"Название: {data.get('name')}\n"
             f"Цена: ${data.get('price')}\n"
             f"Цена: USD: {data.get('price')}\n"  
-            f"      RUB: CurrencyRates().convert('USD', 'RUB', data.get('price')) \n"
-            f"      CNY: CurrencyRates().convert('USD', 'CNY', data.get('price')) \n"
+            f"      RUB: {CurrencyRates().convert('USD', 'RUB', data.get('price'))} \n"
+            f"      CNY: {CurrencyRates().convert('USD', 'CNY', data.get('price'))} \n"
             f"Float: {data.get('item_float')}\n"
             f"ID: {data.get('id')}\n\n"
             f"Причины уведомления:\n" + "\n".join(reasons)
