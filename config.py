@@ -1,13 +1,13 @@
 """Конфигурация приложения"""
 
 # API настройки
-API_KEY = "4e4c7ae1-9e45-4ee2-aef8-b8029f3cb97f"
-TELEGRAM_TOKEN = "7726727524:AAEf82GMHiwXRfJkeZdH-t1Qlk5KOrOYc_c"
-TELEGRAM_CHAT_ID = "758884131"
+API_KEY = "4e4c7b8029f3cb97f"
+TELEGRAM_TOKEN = "77267275eZdH-t1Qlk5KOrOYc_c"
+TELEGRAM_CHAT_ID = "7581"
 
 # Steam настройки
-STEAM_PARTNER = "1057958433"
-STEAM_TOKEN = "0KqicsOy"
+STEAM_PARTNER = "1057"
+STEAM_TOKEN = "0Kqy"
 
 # Фильтры поиска
 FLOAT_RANGES = [
