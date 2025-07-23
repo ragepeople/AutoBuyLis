@@ -3,6 +3,7 @@ import asyncio
 from typing import Dict, Any, List, Tuple
 from datetime import datetime, timedelta
 from centrifuge import SubscriptionEventHandler, PublicationContext
+from forex_python.converter import CurrencyRates
 
 from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS
 from models.skin_purchaser import SkinPurchaser
@@ -123,7 +124,9 @@ class CSGOEventHandler(SubscriptionEventHandler):
                                         f"✅ <b>Автопокупка успешна!</b>\n"
                                         f"Название: {item_name}\n"
                                         f"Float: {skin_float}\n"
-                                        f"Цена: ${price}\n"
+                                        f"Цена: USD: {skin.get('price')}\n"
+                                        f"      RUB: CurrencyRates().convert('USD', 'RUB', skin.get('price')) \n"
+                                        f"      CNY: CurrencyRates().convert('USD', 'CNY', skin.get('price')) \n"
                                         f"ID: {item_id}"
                                     )
                                     await self.tracker.send_alert(message)
@@ -273,6 +276,9 @@ class CSGOEventHandler(SubscriptionEventHandler):
             f"⏱ Появился: {appear_time}\n"
             f"Название: {data.get('name')}\n"
             f"Цена: ${data.get('price')}\n"
+            f"Цена: USD: {skin.get('price')}\n"  
+            f"      RUB: CurrencyRates().convert('USD', 'RUB', skin.get('price')) \n"
+            f"      CNY: CurrencyRates().convert('USD', 'CNY', skin.get('price')) \n"
             f"Float: {data.get('item_float')}\n"
             f"ID: {data.get('id')}\n\n"
             f"Причины уведомления:\n" + "\n".join(reasons)
