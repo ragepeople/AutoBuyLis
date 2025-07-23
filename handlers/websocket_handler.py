@@ -4,7 +4,8 @@ from typing import Dict, Any, List, Tuple
 from datetime import datetime, timedelta
 from centrifuge import SubscriptionEventHandler, PublicationContext
 
-from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS
+from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS
+from models.skin_purchaser import SkinPurchaser
 from utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -18,6 +19,7 @@ class CSGOEventHandler(SubscriptionEventHandler):
         self.float_ranges = float_ranges
         self.active_items = {}
         self.processing_lock = asyncio.Lock()
+        self.purchaser = SkinPurchaser()
 
     async def on_subscribing(self, ctx) -> None:
         logger.info("📡 Подписка на канал...")
@@ -106,6 +108,32 @@ class CSGOEventHandler(SubscriptionEventHandler):
             
             if 'Case' in item_name:
                 return
+            
+            # --- [AUTOBUY BLOCK] ---
+            try:
+                if(item_float is not None and not any(word.lower() in item_name.lower() for word in AUTO_BUY_SETTINGS['EXCLUDED_KEYWORDS'])):
+                    try:
+                        skin_float = float(item_float)
+                        if skin_float < AUTO_BUY_SETTINGS['FLOAT_THRESHOLD'] and price <= AUTO_BUY_SETTINGS['MAX_PRICE']:
+                            logger.info(f"Попыка автобая: {item_name} | Float: {skin_float} | Price: {price}")
+                            try:
+                                result = await self.purchaser.buy_skin(item_id, max_price=price)
+                                if result:
+                                    message = (
+                                        f"✅ <b>Автопокупка успешна!</b>\n"
+                                        f"Название: {item_name}\n"
+                                        f"Float: {skin_float}\n"
+                                        f"Цена: ${price}\n"
+                                        f"ID: {item_id}"
+                                    )
+                                    await self.tracker.send_alert(message)
+                            except Exception as e:
+                                logger.error(f"Автопокупка не удалась: {e}")
+                    except Exception as e:
+                        logger.error(f"Ошибка при попытке автобая: {e}")
+            except Exception as e:
+                logger.error(f"Ошибка в блоке автопокупки: {e}")
+            # --- END [AUTOBUY BLOCK]
             
             # Проверяем критерии
             check_result = self._check_item_criteria(item_float, stickers)
@@ -245,7 +273,7 @@ class CSGOEventHandler(SubscriptionEventHandler):
             f"⏱ Появился: {appear_time}\n"
             f"Название: {data.get('name')}\n"
             f"Цена: ${data.get('price')}\n"
-            f"Float: {data.get('item_float')}"
+            f"Float: {data.get('item_float')}\n"
             f"ID: {data.get('id')}\n\n"
             f"Причины уведомления:\n" + "\n".join(reasons)
         )

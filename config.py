@@ -19,18 +19,6 @@ FLOAT_RANGES = [
 STICKER_KEYWORDS = [
     "2013",
     "Katowice 2014",
-    "Cologne 2016",
-    "Atlanta 2017",
-    "Boston 2018",
-    "Katowice 2019"
-]
-
-CHARM_KEYWORDS = [
-    "Howling Dawn",
-    "Windged Defuser",
-    "Crown (Foil)",
-    "2013",
-    "Katowice 2014",
     "Katowice 2015",
     "(Holo) | Cologne 2016",
     "(Foil) | Cologne 2016",
@@ -42,9 +30,33 @@ CHARM_KEYWORDS = [
     # "(Foil) | Katowice 2019"
 ]
 
+CHARM_KEYWORDS = [
+    "Die-cast",
+    "Semi-Precious",
+    "Hot Howl",
+    "Diamond Dog",
+    "Hot Wurst",
+    "Baby Karat T",
+    "Baby Karat CT"
+]
+
 HIGHLIGHT_KEYWORDS = [
     "Hightlight"
 ]
+
+# Настройки автопокупки
+AUTO_BUY_SETTINGS = {
+    'FLOAT_THRESHOLD': 0.001,    # Максимальное значение float
+    'MAX_PRICE': 15.0,          # Максимальная цена в долларах
+    'EXCLUDED_KEYWORDS': [       # Ключевые слова для исключения
+        'Knife',
+        '★',                    # Символ редкости ножей
+        'Karambit',
+        'Bayonet',
+        'Daggers',
+        'Butterfly',
+    ]
+}
 
 # WebSocket настройки
 WS_URL = "wss://ws.lis-skins.com/connection/websocket"
