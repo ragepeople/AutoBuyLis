@@ -4,7 +4,7 @@ from typing import Dict, Any, List, Tuple
 from datetime import datetime, timedelta
 from centrifuge import SubscriptionEventHandler, PublicationContext
 
-from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS, rates
+from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS, rateRUB, rateCNY
 from models.skin_purchaser import SkinPurchaser
 from utils.logger import setup_logger
 
@@ -124,8 +124,8 @@ class CSGOEventHandler(SubscriptionEventHandler):
                                         f"Название: {item_name}\n"
                                         f"Float: {skin_float}\n"
                                         f"Цена: USD: {price}\n"
-                                        f"      RUB: {rates.convert('USD', 'RUB', {price})} \n"
-                                        f"      CNY: {rates.convert('USD', 'CNY', {price})} \n"
+                                        f"      RUB: {rateRUB * price} \n"
+                                        f"      CNY: {rateCNY * price} \n"
                                         f"ID: {item_id}"
                                     )
                                     await self.tracker.send_alert(message)
@@ -276,8 +276,8 @@ class CSGOEventHandler(SubscriptionEventHandler):
             f"Название: {data.get('name')}\n"
             f"Цена: ${data.get('price')}\n"
             f"Цена: USD: {data.get('price')}\n"  
-            f"      RUB: {rates.convert('USD', 'RUB', data.get('price'))} \n"
-            f"      CNY: {rates.convert('USD', 'CNY', data.get('price'))} \n"
+            f"      RUB: {rateRUB * data.get('price')} \n"
+            f"      CNY: {rateCNY * data.get('price')} \n"
             f"Float: {data.get('item_float')}\n"
             f"ID: {data.get('id')}\n\n"
             f"Причины уведомления:\n" + "\n".join(reasons)
