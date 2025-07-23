@@ -1,7 +1,7 @@
 """Конфигурация приложения"""
 from dotenv import load_dotenv
 import os
-from forex_python.converter import CurrencyRates
+
 
 load_dotenv() 
 
@@ -15,7 +15,8 @@ API_KEY = os.getenv("API_KEY")
 STEAM_PARTNER = os.getenv("STEAM_PARTNER")
 STEAM_TOKEN = os.getenv("STEAM_TOKEN")
 
-rates = CurrencyRates()
+rateRUB = 79
+rateCNY = 0.14
 
 # Фильтры поиска
 FLOAT_RANGES = [

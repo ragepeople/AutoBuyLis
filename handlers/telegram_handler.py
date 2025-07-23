@@ -3,7 +3,7 @@ import re
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
-from config import API_KEY, STEAM_PARTNER, STEAM_TOKEN, rates
+from config import API_KEY, STEAM_PARTNER, STEAM_TOKEN, rateRUB, rateCNY
 from models.skin_purchaser import SkinPurchaser
 from utils.logger import setup_logger
 
@@ -114,8 +114,8 @@ async def process_purchase(query, item_id: int, price: float, context: ContextTy
                     f"Purchase ID: {purchase_id}\n"
                     f"Название: {skin.get('name')}\n"
                     f"Цена: USD: {skin.get('price')}\n"
-		            f"      RUB: {rates.convert('USD', 'RUB', skin.get('price'))} \n"
-                    f"      CNY: {rates.convert('USD', 'CNY', skin.get('price'))} \n"
+                    f"      RUB: {rateRUB * price} \n"
+                    f"      CNY: {rateCNY * price} \n"
 		            f"Статус: {skin.get('status')}\n\n"
                     f"⏳ Ожидайте трейд в Steam!"
                 )
