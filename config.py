@@ -44,6 +44,21 @@ CHARM_KEYWORDS = [
  "Hot Wurst",
  "Diamond Dog",
  "Lil' Monster",
+ "Pinch O' Salt", 
+ "Lil' Crass", 
+ "Baby Karat T", 
+ "Baby Karat CT", 
+ "Semi-Precious", 
+ "Lil' Squirt", 
+ "Titeenium AWP", 
+ "Die-cast AK", 
+]
+
+LOWPRICE_CHARMS_KEYWORDS = [
+ "Hot Howl",
+ "Hot Wurst",
+ "Diamond Dog",
+ "Lil' Monster",
  "Diner Dog", 
  "Lil' Whiskers", 
  "Lil' Teacup", 
