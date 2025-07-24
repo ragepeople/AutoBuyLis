@@ -110,32 +110,43 @@ class CSGOEventHandler(SubscriptionEventHandler):
                 return
             
             # --- [AUTOBUY BLOCK] ---
-            try:
-                if(item_float is not None and not any(word.lower() in item_name.lower() for word in AUTO_BUY_SETTINGS['EXCLUDED_KEYWORDS'])):
-                    try:
-                        skin_float = float(item_float)
-                        if skin_float < AUTO_BUY_SETTINGS['FLOAT_THRESHOLD'] and price <= AUTO_BUY_SETTINGS['MAX_PRICE']:
-                            logger.info(f"Попыка автобая: {item_name} | Float: {skin_float} | Price: {price}")
-                            try:
-                                result = await self.purchaser.buy_skin(item_id, max_price=price)
-                                if result:
-                                    message = (
-                                        f"✅ <b>Автопокупка успешна!</b>\n"
-                                        f"Название: {item_name}\n"
-                                        f"Float: {skin_float}\n"
-                                        f"Цена: USD: {price}\n"
-                                        f"      RUB: {rateRUB * price} \n"
-                                        f"      CNY: {rateCNY * price} \n"
-                                        f"ID: {item_id}"
-                                    )
-                                    await self.tracker.send_alert(message)
-                            except Exception as e:
-                                logger.error(f"Автопокупка не удалась: {e}")
-                    except Exception as e:
-                        logger.error(f"Ошибка при попытке автобая: {e}")
-            except Exception as e:
-                logger.error(f"Ошибка в блоке автопокупки: {e}")
+            if(item_float is not None and not any(word.lower() in item_name.lower() for word in AUTO_BUY_SETTINGS['EXCLUDED_KEYWORDS'])):
+                try:
+                    skin_float = float(item_float)
+                    if skin_float < 0.001 and price <= 15:
+                        logger.info(f"Попыка автобая: {item_name} | Float: {skin_float} | Price: {price}")
+                        try:
+                            result = await self.purchaser.buy_skin(item_id, max_price=price)
+                            if result:
+                                message = (
+                                    f"✅ <b>Автопокупка успешна!</b>\n"
+                                    f"Название: {item_name}\n"
+                                    f"Float: {skin_float}\n"
+                                    f"Цена: USD: {price}\n"
+                                    f"      RUB: {rateRUB * price} \n"
+                                    f"      CNY: {rateCNY * price} \n"
+                                    f"ID: {item_id}"
+                                )
+                                await self.tracker.send_alert(message)
+                        except Exception as e:
+                            logger.error(f"Автопокупка не удалась: {e}")
+                except Exception as e:
+                    logger.error(f"Ошибка при попытке автобая: {e}")
             # --- END [AUTOBUY BLOCK]
+
+            if (price <= 100 and any(any(word in sticker.get('name', '').lower() for word in CHARM_KEYWORDS) for sticker in stickers)):
+                logger.info(f"🛒 Автопокупка скина с брелком: {item_name} (Цена: {price}₽)")
+                await self.tracker.auto_buy_skin(item_id, price)
+                asyncio.create_task(
+                    self.tracker.send_alert(
+                        f"🛒 <b>Автопокупка скина с брелком!</b>\n"
+                        f"{item_name}\n"
+                        f"Цена: {price}₽\n"
+                        f"ID: {item_id}"
+                    )
+                )
+                return
+
             
             # Проверяем критерии
             check_result = self._check_item_criteria(item_float, stickers)

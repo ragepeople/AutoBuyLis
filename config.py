@@ -46,7 +46,11 @@ CHARM_KEYWORDS = [
     "Diamond Dog",
     "Hot Wurst",
     "Baby Karat T",
-    "Baby Karat CT"
+    "Baby Karat CT",
+    "Charm",
+    "Брелок",
+    "charm",
+    "брелок"
 ]
 
 HIGHLIGHT_KEYWORDS = [

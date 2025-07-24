@@ -311,6 +311,17 @@ class CSGOSkinTracker:
         self.running = False
         self.is_connected = False
 
+    async def auto_buy_skin(self, skin_id: int, price: float):
+        try:
+            result = await self.purchaser.buy_skin(skin_id, max_price=price * 1.1)
+            if result:
+                purchase_id = result.get('purchase_id')
+                logger.info(f"✅ Автопокупка успешна! Purchase ID: {purchase_id}")
+            else:
+                logger.error("❌ Ошибка автопокупки")
+        except Exception as e:
+            logger.error(f"Ошибка автопокупки: {e}")
+
     def stop(self):
         """Остановка трекера"""
         logger.info("🛑 Остановка трекера...")
