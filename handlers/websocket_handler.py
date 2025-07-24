@@ -146,23 +146,7 @@ class CSGOEventHandler(SubscriptionEventHandler):
                     )
                 )
                 return
-            
-            if any('charm' in (sticker.get('name', '').lower()) for sticker in stickers):
-                charms = [sticker.get('name', '') for sticker in stickers if 'charm' in sticker.get('name', '').lower()]
-                charms_text = "\n".join([f"• {c}" for c in charms])
-                message = (
-                    f"🔔 <b>Оружие с брелком!</b>\n"
-                    f"⏱ Появился: {appear_time}\n"
-                    f"Название: {item_name}\n"
-                    f"Цена: {price}\n"
-                    f"ID: {item_id}\n"
-                    f"Брелки:\n{charms_text}"
-                )
-                logger.info(f"[CHARM] {item_name} - {charms_text}")
-                await self.tracker.send_alert(message, item_id, price)
-                return
 
-            
             # Проверяем критерии
             check_result = self._check_item_criteria(item_float, stickers)
             
