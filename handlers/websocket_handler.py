@@ -4,7 +4,7 @@ from typing import Dict, Any, List, Tuple
 from datetime import datetime, timedelta
 from centrifuge import SubscriptionEventHandler, PublicationContext
 
-from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS, rateRUB, rateCNY
+from config import STICKER_KEYWORDS, CHARM_KEYWORDS, HIGHLIGHT_KEYWORDS, AUTO_BUY_SETTINGS, rateRUB, rateCNY, LOWPRICE_CHARMS_KEYWORDS
 from models.skin_purchaser import SkinPurchaser
 from utils.logger import setup_logger
 
@@ -134,7 +134,7 @@ class CSGOEventHandler(SubscriptionEventHandler):
                     logger.error(f"Ошибка при попытке автобая: {e}")
             # --- END [AUTOBUY BLOCK]
 
-            if (price <= 100 and any(any(word in sticker.get('name', '').lower() for word in CHARM_KEYWORDS) for sticker in stickers)):
+            if (price <= 10 and any(any(word in sticker.get('name', '').lower() for word in LOWPRICE_CHARMS_KEYWORDS) for sticker in stickers)):
                 logger.info(f"🛒 Автопокупка скина с брелком: {item_name} (Цена: {price}₽)")
                 await self.tracker.auto_buy_skin(item_id, price)
                 asyncio.create_task(
