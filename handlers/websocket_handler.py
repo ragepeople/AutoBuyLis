@@ -134,6 +134,18 @@ class CSGOEventHandler(SubscriptionEventHandler):
                     logger.error(f"Ошибка при попытке автобая: {e}")
             # --- END [AUTOBUY BLOCK]
 
+            if (price <= 10 and any(any(word in sticker.get('name', '').lower() for word in LOWPRICE_CHARMS_KEYWORDS) for sticker in stickers)):
+                logger.info(f"🛒 Автопокупка скина с брелком: {item_name} (Цена: {price}₽)")
+                await self.tracker.auto_buy_skin(item_id, price)
+                asyncio.create_task(
+                    self.tracker.send_alert(
+                        f"🛒 <b>Автопокупка скина с брелком!</b>\n"
+                        f"{item_name}\n"
+                        f"Цена: {price}₽\n"
+                        f"ID: {item_id}"
+                    )
+                )
+
             # Проверяем критерии
             check_result = self._check_item_criteria(item_float, stickers)
             
