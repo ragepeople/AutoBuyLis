@@ -145,7 +145,6 @@ class CSGOEventHandler(SubscriptionEventHandler):
                         f"ID: {item_id}"
                     )
                 )
-                return
 
             # Проверяем критерии
             check_result = self._check_item_criteria(item_float, stickers)
