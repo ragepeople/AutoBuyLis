@@ -130,6 +130,7 @@ class CSGOEventHandler(SubscriptionEventHandler):
                                 await self.tracker.send_alert(message)
                         except Exception as e:
                             logger.error(f"Автопокупка не удалась: {e}")
+                            self.tracker.send_alert(f"Автопокупка не удалась: {e}")
                 except Exception as e:
                     logger.error(f"Ошибка при попытке автобая: {e}")
             # --- END [AUTOBUY BLOCK]
