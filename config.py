@@ -27,16 +27,7 @@ FLOAT_RANGES = [
 
 STICKER_KEYWORDS = [
     "2013",
-    "Katowice 2014",
-    "Katowice 2015",
-    "(Holo) | Cologne 2016",
-    "(Foil) | Cologne 2016",
-    "(Holo) | Atlanta 2017",
-    "(Foil) | Atlanta 2017",
-    "(Holo) | Boston 2018",
-    "(Foil) | Boston 2018"
-    # "(Holo) | Katowice 2019",
-    # "(Foil) | Katowice 2019"
+    "Katowice 2014"
 ]
 
 CHARM_KEYWORDS = [
